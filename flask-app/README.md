@@ -24,3 +24,4 @@ This project demonstrates a multi-container setup using Docker Compose:
 - app.py : Flask application and DB/Redis logic
 - Dockerfile : image build instructions
 - docker-compose.yml - service definitions
+- Adding CI\CD pipeline
