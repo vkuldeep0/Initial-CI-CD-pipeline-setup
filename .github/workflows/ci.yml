@@ -43,4 +43,4 @@ jobs:
 
       # 7. Push the Docker image to DockerHub
       - name: Push image to Docker Hub
-        run: docker push ${{ secrete.DOCKER_REPO }}:latest
+        run: docker push ${{ secrets.DOCKER_REPO }}:latest
