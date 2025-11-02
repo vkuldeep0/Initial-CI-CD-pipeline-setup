@@ -33,9 +33,14 @@ jobs:
       - name: Build Docker image
         run: docker build -t ${{ secrets.DOCKER_REPO }}:latest .
 
-      # 6. Log in to Dockerhub
-      - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+      - name: Check Docker version
+        run: docker --version && docker info
+
+      # 6. Log in to Dockerh
+      - name: Debug Docker login
+        run: |
+          echo "Attempting Docker login as: ${{ secrets.DOCKER_USERNAME }}"
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin || exit 1
 
       # 7. Push the Docker image to DockerHub
       - name: Push image to Docker Hub
