@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask System Insight</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>System Performance Monitor</h1>
+    <canvas id="chart" width="800" height="400"></canvas>
+
+    <script>
+        const ctx = document.getElementById('chart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    { label: 'CPU %', data: [], borderColor: 'red' },
+                    { label: 'Memory %', data: [], borderColor: 'blue' },
+                    { label: 'Disk %', data: [], borderColor: 'green' },
+                ]
+            },
+            options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
+        });
+
+        async function updateChart() {
+            const res = await fetch('/metrics');
+            const data = await res.json();
+            chart.data.labels = data.map(d => d.timestamp.split('T')[1].split('.')[0]);
+            chart.data.datasets[0].data = data.map(d => d.cpu);
+            chart.data.datasets[1].data = data.map(d => d.memory);
+            chart.data.datasets[2].data = data.map(d => d.disk);
+            chart.update();
+        }
+
+        updateChart();
+        setInterval(updateChart, 5000);
+    </script>
+</body>
+</html>

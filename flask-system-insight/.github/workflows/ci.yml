@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Flask System Insight CI/CD
 
 on:
   push:
@@ -19,23 +19,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
       # 3. Install dependencies
       - name: Install dependencies
-        run: |
-          cd flask-app
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       # 4. Run basic tests
       - name: Run tests
-        run: |
-          cd flask-app
-          python -m unittest || echo "No test found"
+        run: python -m unittest || echo "No test found"
 
       # 5. Build Docker image
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_REPO }}:latest ./flask-app
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/flask-system-insight:latest .
 
       # 6. Log in to Dockerhub
       - name: Log in to Docker Hub
@@ -43,4 +39,4 @@ jobs:
 
       # 7. Push the Docker image to DockerHub
       - name: Push image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_REPO }}:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/flask-system-insight:latest

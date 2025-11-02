@@ -8,8 +8,8 @@ This project demonstrates a full CI/CD pipeline using **GitHub Actions**, **Dock
 - CD pipeline pushes image to DockerHub
 
 ## Technologies Used
-- Flask, Redis, PostgreSQL
-- Docker, Docker Compose
+- Flask, APScheduler, SQLite
+- Docker, Chart.js dashboard
 - GitHub Actions, DockerHub
 
 ## CI/CD Workflow
